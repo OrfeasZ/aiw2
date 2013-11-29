@@ -1,0 +1,134 @@
+<!-- INCLUDE overall_header.html -->
+
+
+
+<p class="{S_CONTENT_FLOW_END}<!-- IF S_USER_LOGGED_IN --> rightside<!-- ENDIF -->"><!-- IF S_USER_LOGGED_IN -->{LAST_VISIT_DATE}<!-- ELSE -->{CURRENT_TIME}<!-- ENDIF --></p>
+
+<!-- IF U_MCP --><p>{CURRENT_TIME} <br />[&nbsp;<a href="{U_MCP}">{L_MCP}</a>&nbsp;]</p><!-- ELSEIF S_USER_LOGGED_IN --><p>{CURRENT_TIME}</p><!-- ENDIF -->
+
+
+
+
+
+  <!--[if lte IE 6]>
+
+  <div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
+
+    <div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'><img src='{T_THEME_PATH}/images/ie6nomore/ie6nomore-cornerx.jpg' style='border: none;' alt='{L_IE6NOMORE_CLOSE}' /></a></div>
+
+    <div style='width: 713px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
+
+      <div style='width: 75px; float: left;'><img src='{T_THEME_PATH}/images/ie6nomore/ie6nomore-warning.jpg' alt='{L_IE6NOMORE_WARNING}' /></div>
+
+      <div style='width: 275px; float: left; font-family: Arial, sans-serif;'>
+
+        <div style='font-size: 14px; font-weight: bold; margin-top: 12px;'>{L_IE6NOMORE_TITLE}</div>
+
+        <div style='font-size: 12px; margin-top: 6px; line-height: 12px;'>{L_IE6NOMORE_MESSAGE}</div>
+
+      </div>
+
+      <div style='width: 75px; float: left;'><a href='{L_IE6NOMORE_FIREFOX}'><img src='{T_THEME_PATH}/images/ie6nomore/ie6nomore-firefox.jpg' style='border: none;' alt='{L_IE6NOMORE_FIREFOX_ALT}' /></a></div>
+
+      <div style='width: 73px; float: left;'><a href='{L_IE6NOMORE_SAFARI}'><img src='{T_THEME_PATH}/images/ie6nomore/ie6nomore-safari.jpg' style='border: none;' alt='{L_IE6NOMORE_SAFARI_ALT}' /></a></div>
+
+      <div style='width: 73px; float: left;'><a href='{L_IE6NOMORE_CHROME}'><img src='{T_THEME_PATH}/images/ie6nomore/ie6nomore-chrome.jpg' style='border: none;' alt='{L_IE6NOMORE_CHROME_ALT}' /></a></div>
+
+      <div style='float: left;'><a href='{L_IE6NOMORE_OPERA}'><img src='{T_THEME_PATH}/images/ie6nomore/ie6nomore-opera.jpg' style='border: none;' alt='{L_IE6NOMORE_OPERA_ALT}' /></a></div>
+
+    </div>
+
+  </div>
+
+  <![endif]-->
+
+
+
+
+
+
+
+<!-- IF S_DISPLAY_SEARCH or (S_USER_LOGGED_IN and not S_IS_BOT) -->
+
+<ul class="linklist">
+
+	<!-- IF S_DISPLAY_SEARCH -->
+
+		<li><a href="{U_SEARCH_UNANSWERED}">{L_SEARCH_UNANSWERED}</a><!-- IF S_USER_LOGGED_IN --> &bull; <a href="{U_SEARCH_UNREAD}">{L_SEARCH_UNREAD}</a> &bull; <a href="{U_SEARCH_NEW}">{L_SEARCH_NEW}</a><!-- ENDIF --> &bull; <a href="{U_SEARCH_ACTIVE_TOPICS}">{L_SEARCH_ACTIVE_TOPICS}</a></li>
+
+	<!-- ENDIF -->
+
+	<!-- IF not S_IS_BOT and U_MARK_FORUMS --><li class="rightside"><a href="{U_MARK_FORUMS}" accesskey="m">{L_MARK_FORUMS_READ}</a></li><!-- ENDIF -->
+
+</ul>
+
+<!-- ENDIF -->
+
+
+
+<!-- INCLUDE forumlist_body.html -->
+
+
+
+<!-- IF not S_USER_LOGGED_IN and not S_IS_BOT -->
+
+	<form method="post" action="{S_LOGIN_ACTION}" class="headerspace">
+
+	<h3><a href="{U_LOGIN_LOGOUT}">{L_LOGIN_LOGOUT}</a><!-- IF S_REGISTER_ENABLED -->&nbsp; &bull; &nbsp;<a href="{U_REGISTER}">{L_REGISTER}</a><!-- ENDIF --></h3>
+
+		<fieldset class="quick-login">
+
+			<label for="username">{L_USERNAME}:</label>&nbsp;<input type="text" name="username" id="username" size="10" class="inputbox" title="{L_USERNAME}" />
+
+			<label for="password">{L_PASSWORD}:</label>&nbsp;<input type="password" name="password" id="password" size="10" class="inputbox" title="{L_PASSWORD}" />
+
+			<!-- IF S_AUTOLOGIN_ENABLED -->
+
+				| <label for="autologin">{L_LOG_ME_IN} <input type="checkbox" name="autologin" id="autologin" /></label>
+
+			<!-- ENDIF -->
+
+			<input type="submit" name="login" value="{L_LOGIN}" class="button2" />
+
+			{S_LOGIN_REDIRECT}
+
+		</fieldset>
+
+	</form>
+
+<!-- ENDIF -->
+
+
+
+<!-- IF S_DISPLAY_ONLINE_LIST -->
+
+	<!-- IF U_VIEWONLINE --><h3><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a></h3><!-- ELSE --><h3>{L_WHO_IS_ONLINE}</h3><!-- ENDIF -->
+
+	<p>{TOTAL_USERS_ONLINE} ({L_ONLINE_EXPLAIN})<br />{RECORD_USERS}<br /> <br />{LOGGED_IN_USER_LIST}
+
+
+<!-- ENDIF -->
+
+
+
+<!-- IF S_DISPLAY_BIRTHDAY_LIST and BIRTHDAY_LIST -->
+
+	<h3>{L_BIRTHDAYS}</h3>
+
+	<p><!-- IF BIRTHDAY_LIST -->{L_CONGRATULATIONS}: <strong>{BIRTHDAY_LIST}</strong><!-- ELSE -->{L_NO_BIRTHDAYS}<!-- ENDIF --></p>
+
+<!-- ENDIF -->
+
+
+
+<!-- IF NEWEST_USER -->
+
+	<h3>{L_STATISTICS}</h3>
+
+	<p>{TOTAL_POSTS} &bull; {TOTAL_TOPICS} &bull; {TOTAL_USERS} &bull; {NEWEST_USER}</p>
+
+<!-- ENDIF -->
+
+
+
+<!-- INCLUDE overall_footer.html -->

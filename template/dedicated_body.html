@@ -1,0 +1,44 @@
+<!-- INCLUDE overall_header.html -->
+
+		<div class="forabg">
+			<div class="inner"><span class="corners-top"><span></span></span>
+			<ul class="topiclist">
+				<li class="header">
+					<dl class="icon">
+						<!-- BEGIN servers2 -->
+						<dt>Dedicated Servers ({servers2.AMOUNT} Servers)</dt>
+						<!-- END servers2 -->
+					</dl>
+				</li>
+			</ul>
+			<ul class="topiclist forums">
+				<!-- BEGIN servers -->
+					<li class="row">
+						<dl class="icon" style="background-image: url(http://alteriw.net/serverlist/images/maps/Icon/{servers.MAPNAME}.jpg); min-height: 70px; background-position: 5px 9px;">
+							<dt style="padding-left: 135px;">
+								<a href="aiw://connect/{servers.IP}" class="forumtitle">{servers.HOSTNAME}</a><br />
+								Map: {servers.MAP}<br />
+								Game type: {servers.GAMETYPE}<br />
+								Status: {servers.STATUS}<br />
+								<!-- IF servers.STATUS != "Full" -->
+								IP: <a href="aiw://connect/{servers.IP}">{servers.IP}</a>
+								<!-- ELSE -->
+								IP: {servers.IP}
+								<!-- ENDIF -->
+                            <input class="serverip" type="hidden" value="{servers.IP}"/><br />
+                           	<span class="showserverstats" style="cursor:pointer; color: #242424; text-decoration:underline">Show server stats</span><br />
+                            <div class="serverstats" style="display: none">
+                            </div>
+							</dt>
+                            <dt class="loadingserver" style="display: none; padding-left: 135px;">
+                            <img src='AjaxLoading.gif'>
+                            </dt>
+						</dl>
+					</li>
+				<!-- END servers -->
+			</ul>
+			<span class="corners-bottom"><span></span></span></div>
+		</div>
+		
+		<p>You might also be looking for the old <a href="http://alteriw.net/serverlist/">matchmaking-based server list</a>.</p>
+<!-- INCLUDE overall_footer.html -->

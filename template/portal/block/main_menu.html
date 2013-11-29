@@ -1,0 +1,38 @@
+<!-- $Id: main_menu.html,v 1.1 2008/02/09 08:18:16 angelside Exp $ //-->
+<div class="panel">
+	<div class="inner">
+		<span class="corners-top"><span></span></span>
+			<h3>{L_M_MENU}</h3>
+
+			<div id="navigation">
+				<strong>{L_M_CONTENT}</strong>
+				<ul>
+					<li><a href="{U_INDEX}">{L_INDEX}</a></li>
+					<li><a href="{U_SEARCH}">{L_SEARCH}</a></li>
+					<!-- IF not S_USER_LOGGED_IN -->
+					<li><a href="{U_REGISTER}">{L_REGISTER}</a></li>
+					<!-- ENDIF -->
+					<li><a href="{U_MEMBERLIST}">{L_MEMBERLIST}</a></li>
+					<li><a href="ainstats.php">Server Stats</a></li>
+					<li><a href="http://qchat.rizon.net/?&channels=%23alterIWNet-Support%2C%23alterIWNet ">Chat</a></li>
+					<li><a href="feed.php">Feed</a></li>
+					<!-- IF U_MCP -->
+					<li><a href="{U_MCP}">{L_MCP}</a></li>
+					<!-- ENDIF -->
+					<!-- IF U_ACP -->
+					<li><a href="{U_ACP}">{L_M_ACP}</a></li>
+					<!-- ENDIF -->
+				</ul>
+				<br />
+				<center>
+				<a href="https://alteriw.net"><img src="./styles/aiw2/imageset/ssl_icon.png"></a>			
+				<g:plusone size="medium" href="http://alteriw.net"></g:plusone>
+				<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Falteriw.net&amp;send=false&amp;layout=box_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=dark&amp;font=verdana&amp;height=60" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:60px;" allowTransparency="true"></iframe>
+				</center>	
+	</div>
+
+		<span class="corners-bottom"><span></span></span>
+	</div>
+</div>
+<br style="clear:both" />
+

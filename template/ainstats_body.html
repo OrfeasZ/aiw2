@@ -1,0 +1,156 @@
+<!-- INCLUDE overall_header.html -->
+
+<h2>alterIWnet Server Stats</h2>
+
+<div class="panel">
+	<div class="inner"><span class="corners-top"><span></span></span>
+	<center><div id="placeholder" style="width:600px;height:300px"></div></center>
+	<div class="content">
+	<br />
+<!-- PHP -->   
+	$arr=parse_ini_file("/var/www/alteriw.net/stats/stats.ini",true);
+	$playercount = $arr['Stats']['totalPlayers'];
+	$lobbycount = $arr['Lobbies']['totalLobbies'];
+
+	$lobbycount1 = $arr['Lobbies']['lobbies1'];
+	$lobbycount2 = $arr['Lobbies']['lobbies2'];
+	$lobbycount3 = $arr['Lobbies']['lobbies3'];
+	$lobbycount4 = $arr['Lobbies']['lobbies4'];
+	$lobbycount5 = $arr['Lobbies']['lobbies5'];
+	$lobbycount6 = $arr['Lobbies']['lobbies6'];
+	$lobbycount7 = $arr['Lobbies']['lobbies7'];
+	$lobbycount8 = $arr['Lobbies']['lobbies8'];
+	$lobbycount9 = $arr['Lobbies']['lobbies9'];
+	$lobbycount10 = $arr['Lobbies']['lobbies10'];
+	$lobbycount11 = $arr['Lobbies']['lobbies11'];
+	$lobbycount12 = $arr['Lobbies']['lobbies12'];
+	$lobbycount13 = $arr['Lobbies']['lobbies13'];
+	$lobbycount14 = $arr['Lobbies']['lobbies14'];
+	$lobbycount15 = $arr['Lobbies']['lobbies15'];
+	$lobbycount16 = $arr['Lobbies']['lobbies16'];
+	$lobbycount17 = $arr['Lobbies']['lobbies17'];
+	$lobbycount18 = $arr['Lobbies']['lobbies18'];
+	$lobbycount19 = $arr['Lobbies']['lobbies19'];
+global $cache;
+        if (($data = $cache->get('_dediserverlist')) === false) {
+                if($data = file_get_contents('http://server.alteriw.net:13000/pc/servers.txt'))
+                {
+                        if($data != "")
+                        {
+                                $cache->put('_dediserverlist', $data, 30);
+                        }
+                }
+        }
+//$data = file_get_contents('http://server.alteriw.net:13000/pc/servers.txt');
+$data = explode("\n", $data);
+$servercount = count($data);
+	echo "
+<font size=3><center>Players Online: $playercount | Lobbies Online: $lobbycount | Dedicated Servers Online: $servercount</center><br>
+	<hr />
+	<br>
+	<a href='#' id='toogle'><strong>Lobby Stats (Show/Hide):</strong></a><br>
+	<div id='lobbyStats' >
+		<table cellspacing=\"10\">
+		<tr><td>Team Deathmatch</td><td>$lobbycount1</td></tr>
+		<tr><td>Harcore Team Deathmatch</td><td>$lobbycount2</td></tr>
+		<tr><td>Free-for-all</td><td>$lobbycount3</td></tr>
+		<tr><td>Hardcore Free-for-all</td><td>$lobbycount4</td></tr>
+		<tr><td>One in the Chamber</td><td>$lobbycount5</td></tr>
+		<tr><td>Ground War</td><td>$lobbycount6</td></tr>
+		<tr><td>Team Tactical</td><td>$lobbycount7</td></tr>
+		<tr><td>Hardcore Team Tactical</td><td>$lobbycount8</td></tr>
+		<tr><td>3rd Person Team Tactical</td><td>$lobbycount9</td></tr>
+		<tr><td>Advanced Team Tactical</td><td>$lobbycount10</td></tr>
+		<tr><td>Domination</td><td>$lobbycount11</td></tr>
+		<tr><td>Demolition</td><td>$lobbycount12</td></tr>
+		<tr><td>Sabotage</td><td>$lobbycount13</td></tr>
+		<tr><td>Search and Destroy</td><td>$lobbycount14</td></tr>
+		<tr><td>Hardcore Search and Destroy</td><td>$lobbycount15</td></tr>
+		<tr><td>Cage Match</td><td>$lobbycount16</td></tr>
+		<tr><td>Alteration: Mod Pit</td><td>$lobbycount17</td></tr>
+		</table>
+	</div>
+</font>
+	<br>
+	<br>Stats are updated every 5 minutes
+	<br>*Requires DLC package";
+<!-- ENDPHP -->   
+   </div>
+
+   	<script>
+	$(document).ready(function(){
+		$('lobbyStats').show();
+		$("#lobbyStats").slideToggle("fast");
+		$("#toogle").click(function(){
+			$("#lobbyStats").slideToggle("slow");
+		});
+	});
+	</script>
+	<script id="source" language="javascript" type="text/javascript">
+	var plot;
+	
+$(document).ready(function(){
+	<!-- PHP -->    
+	echo file_get_contents('/var/www/alteriw.net/stats/jscode.txt');
+	<!-- ENDPHP -->
+	   
+		plot = $.plot($("#placeholder"),
+						  [ { data: players, label: "Players = 0"},
+							{ data: lobbies, label: "Lobbies = 0"},
+							{ data: servers, label: "Servers = 0"} ], {	
+								series: {
+									lines: { show: true }
+								},
+								xaxis: { mode: "time", labelWidth: "60", timeformat: "%H:%M", minTickSize: [30, "minute"] },
+								yaxis: { min: 0 },
+								crosshair: { mode: "x" },
+								grid: { hoverable: true, autoHighlight: false }
+//								yaxis: { min: 0 }
+							});
+		var legends = $("#placeholder .legendLabel");
+		legends.each(function () {
+			// fix the widths so they don't jump around
+			$(this).css('width', $(this).width());
+		});
+
+		var updateLegendTimeout = null;
+		var latestPosition = null;
+		
+		function updateLegend() {
+			updateLegendTimeout = null;
+			
+			var pos = latestPosition;
+			
+			var axes = plot.getAxes();
+			if (pos.x < axes.xaxis.min || pos.x > axes.xaxis.max ||
+				pos.y < axes.yaxis.min || pos.y > axes.yaxis.max)
+				return;
+
+			var i, j, dataset = plot.getData();
+			for (i = 0; i < dataset.length ; ++i) {
+				var series = dataset[i];
+
+				// find the nearest points, x-wise
+				for (j = (series.data.length - 1); j >= 0; --j)
+					if (series.data[j][0] > pos.x)
+						break;
+				
+				// now interpolate
+				var y = series.data[j];
+
+				legends.eq(i).text(series.label.replace(/=.*/, "= " + y[1]));
+			}
+		}
+		
+		$("#placeholder").bind("plothover",  function (event, pos, item) {
+			latestPosition = pos;
+			if (!updateLegendTimeout)
+				updateLegendTimeout = setTimeout(updateLegend, 50);
+		});
+});
+</script>
+   <span class="corners-bottom"><span></span></span></div>
+</div>
+
+<!-- INCLUDE jumpbox.html -->
+<!-- INCLUDE overall_footer.html -->

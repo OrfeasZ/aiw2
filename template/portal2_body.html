@@ -1,0 +1,726 @@
+<!-- PHP -->
+	global $SRVRON;
+	global $cache;
+	if (($status = $cache->get('_serverstatus')) === false)
+	{
+		unset($status);
+		$serverip = "94.23.19.48";
+		$port = "13000";
+		if($fp=@fsockopen($serverip,$port,$ERROR_NO,$ERROR_STR,1))
+		{
+			fclose($fp);
+			$status = "online";
+		}
+		else 
+		{
+			$status = "offline";
+		}
+		$cache->put('_serverstatus', $status, 60);
+	}
+	if($status == "offline")
+	{
+		$SRVRON = false;
+	}
+	else
+	{	
+		$SRVRON = true;
+	}
+			
+<!-- ENDPHP -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{S_CONTENT_DIRECTION}" lang="{S_USER_LANG}" xml:lang="{S_USER_LANG}">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset={S_CONTENT_ENCODING}" />
+<meta http-equiv="content-style-type" content="text/css" />
+<meta http-equiv="content-language" content="{S_USER_LANG}" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta name="resource-type" content="document" />
+<meta name="distribution" content="global" />
+<meta name="copyright" content="alterIWnet 2010" />
+<meta name="keywords" content="modern warfare 2 mw2 mw3 black ops free online matchmaking iwnet aiw infinity ward iw game servers dedicated multiplayer console activision alteriwnet gaming rpg funny strategy call of duty " />
+<meta name="description" content="" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9" />
+{META}
+<title>{SITENAME} &bull; <!-- IF S_IN_MCP -->{L_MCP} &bull; <!-- ELSEIF S_IN_UCP -->{L_UCP} &bull; <!-- ENDIF -->Modern Warfare 2 enhancements, dedicated servers and more</title>
+
+<!-- IF S_ENABLE_FEEDS -->
+	<!-- IF S_ENABLE_FEEDS_OVERALL --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {SITENAME}" href="{U_FEED}" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_NEWS --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_NEWS}" href="{U_FEED}?mode=news" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_FORUMS --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_ALL_FORUMS}" href="{U_FEED}?mode=forums" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_TOPICS --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_TOPICS_NEW}" href="{U_FEED}?mode=topics" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_TOPICS_ACTIVE --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_TOPICS_ACTIVE}" href="{U_FEED}?mode=topics_active" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_FORUM and S_FORUM_ID --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FORUM} - {FORUM_NAME}" href="{U_FEED}?f={S_FORUM_ID}" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_TOPIC and S_TOPIC_ID --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_TOPIC} - {TOPIC_TITLE}" href="{U_FEED}?f={S_FORUM_ID}&amp;t={S_TOPIC_ID}" /><!-- ENDIF -->
+<!-- ENDIF -->
+
+<!--
+	phpBB style name:	aIW 2.0
+	Based on style:		prosilver (this is the default phpBB3 style)
+	Original author:	Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:		NoFaTe ( http://n0.pointlimit.com/ )
+-->
+<script type="text/javascript">
+// <![CDATA[
+	var jump_page = '{LA_JUMP_PAGE}:';
+	var on_page = '{ON_PAGE}';
+	var per_page = '{PER_PAGE}';
+	var base_url = '{A_BASE_URL}';
+	var style_cookie = 'phpBBstyle';
+	var style_cookie_settings = '{A_COOKIE_SETTINGS}';
+	var onload_functions = new Array();
+	var onunload_functions = new Array();
+
+	<!-- IF S_USER_PM_POPUP -->
+		if ({S_NEW_PM})
+		{
+			var url = '{UA_POPUP_PM}';
+			window.open(url.replace(/&amp;/g, '&'), '_phpbbprivmsg', 'height=225,resizable=yes,scrollbars=yes, width=400');
+		}
+	<!-- ENDIF -->
+
+	/**
+	* Find a member
+	*/
+	function find_username(url)
+	{
+		popup(url, 760, 570, '_usersearch');
+		return false;
+	}
+
+		
+
+	/**
+	* New function for handling multiple calls to window.onload and window.unload by pentapenguin
+	*/
+	window.onload = function()
+	{
+		for (var i = 0; i < onload_functions.length; i++)
+		{
+			eval(onload_functions[i]);
+		}
+	}
+
+	window.onunload = function()
+	{
+		for (var i = 0; i < onunload_functions.length; i++)
+		{
+			eval(onunload_functions[i]);
+		}
+	}
+
+// ]]>
+</script>
+<!--<script type="text/javascript" src="{T_TEMPLATE_PATH}/excanvas.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/jquery.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/jquery.textarearesizer.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/jquery.flot.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/jquery.flot.crosshair.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/thickbox/thickbox.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/styleswitcher.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/forum_fn.js"></script>-->
+<script type="text/javascript" src="/min/?g=js"></script>
+
+<script type="text/javascript">
+// <![CDATA[
+	/**
+	* Resize too large images
+	*/
+	var reimg_maxWidth = 700, reimg_maxHeight = 0, reimg_relWidth = 0;
+	
+		var reimg_swapPortrait = true;
+	
+	var reimg_loadingImg = "./images/spacer.gif";
+	var reimg_loadingStyle = "width: 16px; height: 16px; background: url(./styles/aiw2/imageset/icon_reimg_loading.gif) top left no-repeat; filter: Alpha(Opacity=50); opacity: .50;";
+	var reimg_loadingAlt = "Loading...";
+	
+			var reimg_autoLink = true;
+		
+			var reimg_zoomImg = reimg_loadingImg;
+			var reimg_zoomStyle = "width: 20px; height: 20px; background: url(./styles/aiw2/imageset/icon_reimg_zoom_in.gif) top left no-repeat; filter: Alpha(Opacity=50); opacity: .50;";
+			var reimg_zoomHover = "background-position: 0 100%; cursor: pointer; filter: Alpha(Opacity=100); opacity: 1.00;";
+		
+		var reimg_zoomAlt = "Zoom in (real dimensions: %1$d x %2$d)";
+		var reimg_zoomTarget = "_litebox";
+	
+		
+	function reimg(img, width, height)
+	{
+		if (window.reimg_version)
+		{
+			reimg_resize(img, width, height);
+		}
+	}
+// ]]>
+
+</script>
+
+<script type="text/javascript" src="./reimg/reimg.js"></script>
+
+
+	<style type="text/css" media="screen, projection">
+	<!--
+		#topicreview .reimg-zoom { display: none; }
+	-->
+	</style>
+
+
+	<script type="text/javascript">
+	// <![CDATA[
+		/**
+		* Light box for resized images
+		*/
+	
+		var litebox_alt = "Zoom out";
+		
+			var litebox_zoomImg = reimg_loadingImg;
+			
+				var litebox_zoomStyle = reimg_zoomStyle;
+				var litebox_zoomHover = reimg_zoomHover;
+			
+			var litebox_zoomAlt = reimg_zoomAlt;
+		
+			var litebox_style = "cursor: pointer;"
+		
+			var litebox_closeImg = reimg_loadingImg;
+			var litebox_closeStyle = "width: 20px; height: 20px; background: url(./styles/aiw2/imageset/icon_reimg_zoom_out.gif) top left no-repeat; filter: Alpha(Opacity=50); opacity: .50;";
+			var litebox_closeHover = reimg_zoomHover;
+			var litebox_closeAlt = litebox_alt;
+		
+		var litebox_rtl = false;
+	
+	// ]]>
+	</script>
+
+	
+		<script type="text/javascript" src="./reimg/litebox.js"></script>
+
+
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/jquery.ui.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/jquery.address.js"></script>
+
+<link href="{T_TEMPLATE_PATH}/thickbox/thickbox.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="{T_TEMPLATE_PATH}/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
+
+<link href="{T_THEME_PATH}/print.css" rel="stylesheet" type="text/css" media="print" title="printonly" />
+<link href="{T_STYLESHEET_LINK}" rel="stylesheet" type="text/css" media="screen, projection" />
+
+<link href="{T_THEME_PATH}/normal.css" rel="stylesheet" type="text/css" title="A" />
+<link href="{T_THEME_PATH}/medium.css" rel="alternate stylesheet" type="text/css" title="A+" />
+<link href="{T_THEME_PATH}/large.css" rel="alternate stylesheet" type="text/css" title="A++" />
+
+<!-- IF S_CONTENT_DIRECTION eq 'rtl' -->
+	<link href="{T_THEME_PATH}/bidi.css" rel="stylesheet" type="text/css" media="screen, projection" />
+<!-- ENDIF -->
+
+<script type="text/javascript">
+$(function() {
+  $( "#mtabs" ).tabs({
+    cache: false,
+  });
+
+  // For forward and back
+  $.address.externalChange(function(event){
+    //var name = window.location.hash != "" ? window.location.hash.split("#")[2] : ""
+	var name = $.address.path().substring(1);
+    $("#mtabs").tabs( "select" , $("#mtabs a[name="+ name + "]").attr('href') )
+  });
+  // when the tab is selected update the url with the hash
+  $("#mtabs").bind("tabsselect", function(event, ui) { 
+    $.address.path(ui.tab.name);
+  });
+
+});
+</script>
+
+<style type="text/css">
+html, body
+{
+	background-color: #fff;
+	background-image: none;
+	font-family: "Trebuchet MS", Arial, sans-serif;
+	font-size: 11px;
+}
+.ui-tabs, .ui-tabs a {
+	border:none;
+	outline: none;
+}
+.container
+{
+	width: 945px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#portal-header
+{
+	margin-top: 105px;
+	background-image: url({T_THEME_PATH}/images/portal_bg.png);
+	height: 310px;
+}
+
+#portal-header .container
+{
+	position: relative;
+}
+
+.download
+{
+	position: absolute;
+	top: 210px;
+	right: 85px;
+	text-align: center;
+}
+
+.introtext
+{
+	position: absolute;
+	top: 30px;
+	right: 5px;
+	width: 470px;
+	color: #fff;
+}
+
+.video
+{
+	position: absolute;
+	top: 30px;
+	left: 5px;
+}
+
+.download > a
+{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	background-image: url({T_THEME_PATH}/images/download_btn.png);
+	width: 300px;
+	height: 55px;
+}
+
+.download > a span
+{
+	display: none;
+}
+
+.download > span
+{
+	color: #fff;
+}
+
+.download > span a
+{
+	color: #fff;
+	text-decoration: underline;
+}
+
+.download > span a:hover
+{
+	text-decoration: none;
+}
+
+.announcements
+{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#portal-header h2
+{
+	color: #fff;
+	font-size: 110%;
+	font-family: Verdana, sans-serif;
+	font-weight: bold;
+}
+
+.announcements a
+{
+	color: #fff;
+}
+
+.announcements a:hover
+{
+	color: #09f;
+}
+
+#portal-main
+{
+	color: #000;
+	font-size: 1.1em;
+}
+
+#portal-main h2
+{
+	font-family: "Trebuchet MS", Arial, sans-serif;
+	color: #000;
+	border-bottom: 1px solid #aaa;
+	margin-bottom: 12px;
+	font-size: 1.8em;
+}
+
+#portal-main ul
+{
+	margin-left: 18px;
+}
+
+#announcements h2
+{
+	margin-bottom: 0px;
+}
+
+#announcements span.date
+{
+	margin-bottom: 12px;
+	display: block;
+}
+
+.portal-content
+{
+	float: left;
+	width: 730px;
+}
+
+.portal-sidebar
+{
+	float: right;
+	width: 200px;
+}
+
+.portal-sidebar ul
+{
+	list-style-type: none;
+}
+
+.portal-sidebar ul a
+{
+	display: block;
+	font-size: 12px;
+}
+
+.stats p
+{
+	margin: 0px;
+	margin-bottom: 5px;
+}
+
+.stats strong
+{
+	font-size: 200%;
+	font-family: "Trebuchet MS", Arial;
+}
+
+#portal-main ul.ui-tabs-nav, #portal-main .portal-sidebar ul
+{
+	margin-left: 0px;
+}
+
+#announcements .stats h2
+{
+        margin-bottom: 5px;
+}
+
+.statistics h1 {
+				font: bold 21px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+				text-shadow: #F7F8F9 0px 1px 0;
+				letter-spacing: 0px;
+				color: #343333;
+				display: block;
+				border-bottom: 1px solid #AAA;
+			}
+			.statistics li {
+				font: 15px "HelveticaNeue", Helvetica, Arial;
+				height: 37px;
+				display: block;
+				clear: both;
+				margin-top: 5px;
+				color: #2C2C2C;
+				line-height: 37px;
+				padding-left: 18px;
+				padding-right: 18px;
+				background-color: #EFEFEF;
+				border: 1px solid #C5C5C6;
+				text-shadow: white 0px 1px 0;
+				-webkit-box-shadow: #fff 0px 1px 1px inset;
+				-moz-box-shadow: #fff 0px 1px 1px inset;
+				-webkit-border-radius: 4px;
+				-moz-border-radius: 4px;
+				border-radius: 4px 4px 4px 4px;
+				border-image: initial;
+			}
+			.statistics li:hover{
+				background-color: #F2F2F2;
+			}
+			.statistics span {
+				font-weight: bold;
+				color: #3583CC;
+			}
+	
+
+
+
+</style>
+
+<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
+</head>
+
+<body id="phpbb" class="section-{SCRIPT_NAME} {S_CONTENT_DIRECTION}">
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-16422462-1']);
+  _gaq.push(['_setDomainName', '.alteriw.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+<div id="loginbox" style="display:none">
+<form method="post" action="{S_LOGIN_ACTION}" class="headerspace">
+	<h3><a href="{U_LOGIN_LOGOUT}">{L_LOGIN_LOGOUT}</a></h3>
+		<fieldset class="quick-login">
+			<label for="username">{L_USERNAME}:</label>&nbsp;<input type="text" name="username" id="username" size="10" class="inputbox2" title="{L_USERNAME}" /><br><br>
+			<label for="password">{L_PASSWORD}:</label>&nbsp;<input type="password" name="password" id="password" size="10" class="inputbox2" title="{L_PASSWORD}" /><br><br>
+			<!-- IF S_AUTOLOGIN_ENABLED -->
+				<label for="autologin">{L_LOG_ME_IN} <input type="checkbox" name="autologin" id="autologin" /></label>
+			<!-- ENDIF -->
+			<br><br>
+			<input type="submit" name="login" value="{L_LOGIN}" class="button2" />
+		</fieldset>
+</form>
+</div> 
+
+<div id="searchbox" style="display:none">
+<form action="{U_SEARCH}" method="post" id="search">
+	<fieldset>
+		<input name="keywords" id="keywords" type="text" maxlength="128" title="{L_SEARCH_KEYWORDS}" class="inputbox search" value="<!-- IF SEARCH_WORDS-->{SEARCH_WORDS}<!-- ELSE -->{L_SEARCH_MINI}<!-- ENDIF -->" onclick="if(this.value=='{LA_SEARCH_MINI}')this.value='';" onblur="if(this.value=='')this.value='{LA_SEARCH_MINI}';" />
+		<input class="button2" value="{L_SEARCH}" type="submit" /><br />
+		<a href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}">{L_SEARCH_ADV}</a> {S_SEARCH_HIDDEN_FIELDS}
+	</fieldset>
+</form>
+</div>
+
+<a id="top" name="top" accesskey="t"></a>
+
+<div id="bg-bar">
+<div class="wrapper">
+	<div id="page-header">
+		{ADS_1}
+		<div class="headerbar">
+			<div class="inner"><span class="corners-top"><span></span></span>
+
+			<div id="site-description">
+				<!-- PHP -->
+
+				global $SRVRON;
+		
+				if($SRVRON == false)
+				{
+					echo '<a href="/index.php" id="logo"><img src="./styles/aiw2/imageset/logo-off.png"></a>';
+				}
+				else
+				{
+					echo '<a href="/index.php" id="logo"><img src="./styles/aiw2/imageset/logo.png"></a>';
+				}
+
+				<!-- ENDPHP -->
+				<p class="skiplink"><a href="#start_here">{L_SKIP}</a></p>
+			</div>
+
+			<div id="top-menu">
+				<ul id="top-menu1">
+				<!-- IF S_USER_LOGGED_IN -->
+				<li><a href="{U_LOGIN_LOGOUT}" accesskey="x" id="btn-logout" ><span>Logout</span></a></li>
+				<!-- PHP -->
+				if ($user->data['user_unread_privmsg'])
+				{
+					echo '<li><a href="ucp.php?i=pm&folder=inbox" accesskey="x" id="btn-messenger-new" ><span>Messenger</span></a></li>';
+				}
+				else
+				{
+					echo '<li><a href="ucp.php?i=pm&folder=inbox" accesskey="x" id="btn-messenger" ><span>Messenger</span></a></li>';
+				}
+				<!-- ENDPHP -->
+				<!-- ELSE -->
+				<!-- PHP -->
+				if(empty($_GET))
+				{
+					echo '<li><a href="#TB_inline?height=180&amp;width=360&amp;inlineId=loginbox;" id="btn-login" class="thickbox" ><span>Login</span></a></li>';
+				}
+				else
+				{
+					echo '<li><a href="#TB_inline&height=180&amp;width=360&amp;inlineId=loginbox;" id="btn-login" class="thickbox" ><span>Login</span></a></li>';
+				}
+				<!-- ENDPHP -->
+				<li><a href="{U_REGISTER}" id="btn-register" ><span>Register</span></a></li>
+				<!-- ENDIF -->
+				<!-- PHP -->
+				if(empty($_GET))
+				{
+					echo '<li><a href="#TB_inline?height=65&amp;width=300&amp;inlineId=searchbox;" accesskey="e" id="btn-search" rel="lyteframe" class="thickbox"  ><span>Search</span></a></li>';
+				}
+				else
+				{
+					echo '<li><a href="#TB_inline&height=65&amp;width=300&amp;inlineId=searchbox;" accesskey="e" id="btn-search" rel="lyteframe" class="thickbox"  ><span>Search</span></a></li>';
+				}
+				<!-- ENDPHP -->
+				<!-- IF S_USER_LOGGED_IN -->
+				<li><a href="{U_PROFILE}" accesskey="e" id="btn-usercp" ><span>User CP</span></a></li>
+				<!-- ENDIF -->
+				<br>
+				<li><a href="dedicated.php" id="btn-serverlist" ><span>Server List</span></a></li>
+				<li><a href="ainstats.php" id="btn-stats" ><span>Stats</span></a></li>
+				<li><a href="viewtopic.php?f=3&t=24" id="btn-downloads" ><span>Downloads</span></a></li>
+				</ul>
+			</div>
+
+			<span class="corners-bottom"><span></span></span></div>
+		</div>
+
+	</div>
+</div>
+</div>
+
+<div id="portal-header">
+	<div class="container">
+		<div class="introtext">
+			<p>
+				{INTRODUCTION}
+			</p>
+			<h2>Recent announcements</h2>
+			<ul class="announcements">
+				<!-- BEGIN announcements -->
+				<li><a href="{announcements.TOPIC_LINK}">{announcements.TOPIC_TITLE}</a></li>
+				<!-- END announcements -->
+			</ul>
+		</div>
+		<div class="download">
+			<a href="http://alteriw.net/content/aIW-37a-10802.zip"><span>Download</span></a>
+			<span><a href="http://staff.alteriw.net/tracker/torrents/aIW-Client.torrent">Standalone</a> (6.76 GB) &bull; <a href="http://alteriw.net/viewtopic.php?f=93&amp;t=22667">Dedicated server</a>
+		</div>
+		<div class="video">
+			<!-- TODO: make this dynamic! -->
+			<object width="450" height="253"><param name="movie" value="http://www.youtube.com/v/{VIDEO_ID}?version=3&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/{VIDEO_ID}?version=3&amp;hl=en_US" type="application/x-shockwave-flash" width="450" height="253" allowscriptaccess="always" allowfullscreen="true"></embed></object>
+		</div>
+	</div>
+</div>
+
+<div id="portal-main">
+<div class="container">
+<div id="mtabs">
+	<ul>
+		<li><a href="#announcements" name="announcements">Home</a></li>
+		<li><a href="#features" name="features">Features</a></li>
+		<li><a href="#chat" name="chat">Chat</a></li>
+		<li><a href="#support" name="support">Support</a></li>
+		<li><a href="#community" name="community">Community</a></li>
+	</ul>
+	<div id="announcements">
+		<div class="portal-content">
+		<!-- BEGIN announcements -->
+			<!-- IF announcements.S_ROW_COUNT < 3 -->
+				<h2><a href="{announcements.TOPIC_LINK}">{announcements.TOPIC_TITLE}</a></h2>
+				<span class="date">by {announcements.TOPIC_AUTHOR} at {announcements.TOPIC_DATE}</span>
+				{announcements.TOPIC_TEXT}
+			<!-- ENDIF -->
+		<!-- END announcements -->
+		</div>
+		
+		<div class="portal-sidebar">
+		<h2>Navigation</h2>
+		<ul>
+			<li><a href="{U_INDEX}">Forums</a></li>
+			<li><a href="ainstats.php">Server Stats</a></li>
+			<!-- <li><a href="http://qchat.rizon.net/?&channels=%23alterIWNet-Support%2C%23alterIWNet ">Chat</a></li> -->
+			<li><a href="feed.php">Feed</a></li>
+			<li><a href="search.php?search_id=egosearch">Search for own posts</a></li>
+		</ul>
+		
+		<br />
+		<center>
+		<a href="https://alteriw.net"><img src="./styles/aiw2/imageset/ssl_icon.png"></a><br />			
+		<g:plusone size="medium" href="http://alteriw.net"></g:plusone><br />
+
+<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Falteriw.net&amp;send=false&amp;layout=button_count&amp;width=130&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:21px; margin-top:3px;" allowTransparency="true"></iframe>
+		</center>	
+
+<div class="statistics">
+				<h2>Statistics</h2>
+				<ul>
+					<li>
+
+						<span>{NUM_SERVERS}</span> servers
+					</li>
+					<li>
+						<span>{NUM_PLAYERSCUR}</span> players now
+					</li>
+					<li>
+						<span>{NUM_PLAYERS24}</span> players yesterday
+					</li>
+
+					<li>
+						<span>{NUM_PLAYERS}</span> total players
+					</li>
+				</ul>
+			</div>
+			<br/>
+			<div class="adfront">
+			<h2>Advertisement</h2><br/>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-1305083582457756";
+/* aiw new portal */
+google_ad_slot = "3718118798";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+	</div>
+	</div>
+	<div id="community">
+<!--	<div class="panel">
+        <div class="inner">
+                <span class="corners-top"><span></span></span>-->
+				<h2>Popular topics</h2>
+                                        <!-- BEGIN latest_hot_topics -->
+                                                <a href="{latest_hot_topics.U_VIEW_TOPIC}" title="{latest_hot_topics.FULL_TITLE}">{latest_hot_topics.TITLE}</a><br />
+                                        <!-- END latest_hot_topics -->
+				<h2>Recent topics</h2>
+                                        <!-- BEGIN latest_topics -->
+                                                <a href="{latest_topics.U_VIEW_TOPIC}" title="{latest_topics.FULL_TITLE}">{latest_topics.TITLE}</a><br />
+                                        <!-- END latest_topics -->
+	</div>
+	<div id="features">
+		{FEATURES}
+	</div>
+	<div id="chat">
+		{CHAT}
+	</div>
+	<div id="support">
+		{SUPPORT}
+	</div>
+	<br style="clear: both;" />
+</div>
+
+</div>
+</div>
+<div style="text-align: center; clear: both; padding-top: 50px;">
+	&copy; alterIWnet 2011
+</div>
+<div>
+	<a id="bottom" name="bottom" accesskey="z"></a>
+	<!-- IF not S_IS_BOT -->{RUN_CRON_TASK}<!-- ENDIF -->
+</div>
+
+</div>
+</div>
+</div>
+</body>
+</html>

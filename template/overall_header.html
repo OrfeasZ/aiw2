@@ -1,0 +1,374 @@
+<!-- PHP -->
+	global $SRVRON;
+	global $cache;
+	if (($status = $cache->get('_serverstatus')) === false)
+	{
+		unset($status);
+		$serverip = "94.23.19.48";
+		$port = "13000";
+		if($fp=@fsockopen($serverip,$port,$ERROR_NO,$ERROR_STR,1))
+		{
+			fclose($fp);
+			$status = "online";
+		}
+		else 
+		{
+			$status = "offline";
+		}
+		$cache->put('_serverstatus', $status, 60);
+	}
+	if($status == "offline")
+	{
+		$SRVRON = false;
+	}
+	else
+	{	
+		$SRVRON = true;
+	}
+			
+<!-- ENDPHP -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{S_CONTENT_DIRECTION}" lang="{S_USER_LANG}" xml:lang="{S_USER_LANG}">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset={S_CONTENT_ENCODING}" />
+<meta http-equiv="content-style-type" content="text/css" />
+<meta http-equiv="content-language" content="{S_USER_LANG}" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta name="resource-type" content="document" />
+<meta name="distribution" content="global" />
+<meta name="copyright" content="alterIWnet 2010" />
+<meta name="keywords" content="modern warfare 2 mw2 mw3 black ops free online matchmaking iwnet aiw infinity ward iw game servers dedicated multiplayer console activision alteriwnet gaming rpg funny strategy call of duty " />
+<meta name="description" content="" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9" />
+{META}
+<title>{SITENAME} &bull; <!-- IF S_IN_MCP -->{L_MCP} &bull; <!-- ELSEIF S_IN_UCP -->{L_UCP} &bull; <!-- ENDIF -->{PAGE_TITLE}</title>
+
+<!-- IF S_ENABLE_FEEDS -->
+	<!-- IF S_ENABLE_FEEDS_OVERALL --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {SITENAME}" href="{U_FEED}" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_NEWS --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_NEWS}" href="{U_FEED}?mode=news" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_FORUMS --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_ALL_FORUMS}" href="{U_FEED}?mode=forums" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_TOPICS --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_TOPICS_NEW}" href="{U_FEED}?mode=topics" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_TOPICS_ACTIVE --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_TOPICS_ACTIVE}" href="{U_FEED}?mode=topics_active" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_FORUM and S_FORUM_ID --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FORUM} - {FORUM_NAME}" href="{U_FEED}?f={S_FORUM_ID}" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_TOPIC and S_TOPIC_ID --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_TOPIC} - {TOPIC_TITLE}" href="{U_FEED}?f={S_FORUM_ID}&amp;t={S_TOPIC_ID}" /><!-- ENDIF -->
+<!-- ENDIF -->
+
+<!--
+	phpBB style name:	aIW 2.0
+	Based on style:		prosilver (this is the default phpBB3 style)
+	Original author:	Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:		NoFaTe ( http://n0.pointlimit.com/ )
+-->
+<script type="text/javascript">
+// <![CDATA[
+	var jump_page = '{LA_JUMP_PAGE}:';
+	var on_page = '{ON_PAGE}';
+	var per_page = '{PER_PAGE}';
+	var base_url = '{A_BASE_URL}';
+	var style_cookie = 'phpBBstyle';
+	var style_cookie_settings = '{A_COOKIE_SETTINGS}';
+	var onload_functions = new Array();
+	var onunload_functions = new Array();
+
+	<!-- IF S_USER_PM_POPUP -->
+		if ({S_NEW_PM})
+		{
+			var url = '{UA_POPUP_PM}';
+			window.open(url.replace(/&amp;/g, '&'), '_phpbbprivmsg', 'height=225,resizable=yes,scrollbars=yes, width=400');
+		}
+	<!-- ENDIF -->
+
+	/**
+	* Find a member
+	*/
+	function find_username(url)
+	{
+		popup(url, 760, 570, '_usersearch');
+		return false;
+	}
+
+		
+
+	/**
+	* New function for handling multiple calls to window.onload and window.unload by pentapenguin
+	*/
+	window.onload = function()
+	{
+		for (var i = 0; i < onload_functions.length; i++)
+		{
+			eval(onload_functions[i]);
+		}
+	}
+
+	window.onunload = function()
+	{
+		for (var i = 0; i < onunload_functions.length; i++)
+		{
+			eval(onunload_functions[i]);
+		}
+	}
+
+// ]]>
+</script>
+<!--<script type="text/javascript" src="{T_TEMPLATE_PATH}/excanvas.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/jquery.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/jquery.textarearesizer.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/jquery.flot.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/jquery.flot.crosshair.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/thickbox/thickbox.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/styleswitcher.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/forum_fn.js"></script>-->
+<script type="text/javascript" src="/min/?g=js"></script>
+
+<script type="text/javascript">
+	/* jQuery textarea resizer plugin usage */
+	$(document).ready(function() {
+		$('textarea.resizable:not(.processed)').TextAreaResizer();
+		$('.showserverstats').click(function() {
+			var ip = $(this).parent().children('.serverip').val();
+			$(this).parent().parent().children('.loadingserver').fadeIn("fast");
+			var parent = this;
+			$.ajax({ url: "getserverstats.php?ip="+ip, success: function(data){
+				$("body").find(".serverstats").slideUp("fast");
+				$(parent).parent().parent().children('.loadingserver').fadeOut("fast");
+        		$(parent).parent().children('.serverstats').html(data);
+				$(parent).parent().children('.serverstats').slideDown("fast");
+    		}});
+		});
+	});
+</script>
+
+<link href="{T_TEMPLATE_PATH}/thickbox/thickbox.css" rel="stylesheet" type="text/css" media="screen" />
+
+<!-- INCLUDE reimg_content.html -->
+<link href="{T_THEME_PATH}/print.css" rel="stylesheet" type="text/css" media="print" title="printonly" />
+<link href="{T_STYLESHEET_LINK}" rel="stylesheet" type="text/css" media="screen, projection" />
+
+<link href="{T_THEME_PATH}/normal.css" rel="stylesheet" type="text/css" title="A" />
+<link href="{T_THEME_PATH}/medium.css" rel="alternate stylesheet" type="text/css" title="A+" />
+<link href="{T_THEME_PATH}/large.css" rel="alternate stylesheet" type="text/css" title="A++" />
+
+<!-- IF S_CONTENT_DIRECTION eq 'rtl' -->
+	<link href="{T_THEME_PATH}/bidi.css" rel="stylesheet" type="text/css" media="screen, projection" />
+<!-- ENDIF -->
+
+
+<!-- INCLUDE ads/ads.js -->
+<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
+</head>
+
+<body id="phpbb" class="section-{SCRIPT_NAME} {S_CONTENT_DIRECTION}">
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-16422462-1']);
+  _gaq.push(['_setDomainName', '.alteriw.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+<div id="loginbox" style="display:none">
+<form method="post" action="{S_LOGIN_ACTION}" class="headerspace">
+	<h3><a href="{U_LOGIN_LOGOUT}">{L_LOGIN_LOGOUT}</a></h3>
+		<fieldset class="quick-login">
+			<label for="username">{L_USERNAME}:</label>&nbsp;<input type="text" name="username" id="username" size="10" class="inputbox2" title="{L_USERNAME}" /><br><br>
+			<label for="password">{L_PASSWORD}:</label>&nbsp;<input type="password" name="password" id="password" size="10" class="inputbox2" title="{L_PASSWORD}" /><br><br>
+			<!-- IF S_AUTOLOGIN_ENABLED -->
+				<label for="autologin">{L_LOG_ME_IN} <input type="checkbox" name="autologin" id="autologin" /></label>
+			<!-- ENDIF -->
+			<br><br>
+			<input type="submit" name="login" value="{L_LOGIN}" class="button2" />
+		</fieldset>
+</form>
+</div> 
+
+<div id="searchbox" style="display:none">
+<form action="{U_SEARCH}" method="post" id="search">
+	<fieldset>
+		<input name="keywords" id="keywords" type="text" maxlength="128" title="{L_SEARCH_KEYWORDS}" class="inputbox search" value="<!-- IF SEARCH_WORDS-->{SEARCH_WORDS}<!-- ELSE -->{L_SEARCH_MINI}<!-- ENDIF -->" onclick="if(this.value=='{LA_SEARCH_MINI}')this.value='';" onblur="if(this.value=='')this.value='{LA_SEARCH_MINI}';" />
+		<input class="button2" value="{L_SEARCH}" type="submit" /><br />
+		<a href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}">{L_SEARCH_ADV}</a> {S_SEARCH_HIDDEN_FIELDS}
+	</fieldset>
+</form>
+</div>
+
+<a id="top" name="top" accesskey="t"></a>
+
+<div id="bg-bar">
+<div class="wrapper">
+	<div id="page-header">
+		{ADS_1}
+		<div class="headerbar">
+			<div class="inner"><span class="corners-top"><span></span></span>
+
+			<div id="site-description">
+				<!-- PHP -->
+
+				global $SRVRON;
+		
+				if($SRVRON == false)
+				{
+					echo '<a href="/" id="logo"><img src="/styles/aiw2/imageset/logo-off.png"></a>';
+				}
+				else
+				{
+					echo '<a href="/" id="logo"><img src="/styles/aiw2/imageset/logo.png"></a>';
+				}
+
+				<!-- ENDPHP -->
+				<p class="skiplink"><a href="#start_here">{L_SKIP}</a></p>
+			</div>
+
+			<div id="top-menu">
+				<ul id="top-menu1">
+				<!-- IF S_USER_LOGGED_IN -->
+				<li><a href="{U_LOGIN_LOGOUT}" accesskey="x" id="btn-logout" ><span>Logout</span></a></li>
+				<!-- PHP -->
+				if ($user->data['user_unread_privmsg'])
+				{
+					echo '<li><a href="ucp.php?i=pm&folder=inbox" accesskey="x" id="btn-messenger-new" ><span>Messenger</span></a></li>';
+				}
+				else
+				{
+					echo '<li><a href="ucp.php?i=pm&folder=inbox" accesskey="x" id="btn-messenger" ><span>Messenger</span></a></li>';
+				}
+				<!-- ENDPHP -->
+				<!-- ELSE -->
+				<!-- PHP -->
+				if(empty($_GET))
+				{
+					echo '<li><a href="#TB_inline?height=180&amp;width=360&amp;inlineId=loginbox;" id="btn-login" class="thickbox" ><span>Login</span></a></li>';
+				}
+				else
+				{
+					echo '<li><a href="#TB_inline&height=180&amp;width=360&amp;inlineId=loginbox;" id="btn-login" class="thickbox" ><span>Login</span></a></li>';
+				}
+				<!-- ENDPHP -->
+				<li><a href="{U_REGISTER}" id="btn-register" ><span>Register</span></a></li>
+				<!-- ENDIF -->
+				<!-- PHP -->
+				if(empty($_GET))
+				{
+					echo '<li><a href="#TB_inline?height=65&amp;width=300&amp;inlineId=searchbox;" accesskey="e" id="btn-search" rel="lyteframe" class="thickbox"  ><span>Search</span></a></li>';
+				}
+				else
+				{
+					echo '<li><a href="#TB_inline&height=65&amp;width=300&amp;inlineId=searchbox;" accesskey="e" id="btn-search" rel="lyteframe" class="thickbox"  ><span>Search</span></a></li>';
+				}
+				<!-- ENDPHP -->
+				<!-- IF S_USER_LOGGED_IN -->
+				<li><a href="{U_PROFILE}" accesskey="e" id="btn-usercp" ><span>User CP</span></a></li>
+				<!-- ENDIF -->
+				<br>
+				<li><a href="dedicated.php" id="btn-serverlist" ><span>Server List</span></a></li>
+				<li><a href="ainstats.php" id="btn-stats" ><span>Stats</span></a></li>
+				<li><a href="viewtopic.php?f=3&t=24" id="btn-downloads" ><span>Downloads</span></a></li>
+				</ul>
+			</div>
+
+			<span class="corners-bottom"><span></span></span></div>
+		</div>
+
+	</div>
+</div>
+</div>
+
+<!-- PHP -->
+
+	global $SRVRON;
+	
+	if($SRVRON == false)
+	{
+		echo '<div id="wrap" class="wrap-offline">';
+	}
+	else
+	{
+		echo '<div id="wrap">';
+	}
+
+<!-- ENDPHP -->
+
+	<div id="wrap-inner">
+
+	<!-- IF ADS_2 -->
+	<br />
+	<div class="forabg">
+		<div class="inner"><span class="corners-top"><span></span></span>
+			<ul class="topiclist">
+				<li class="header">
+					<dl class="icon">
+						<dt>{L_ADVERTISEMENT}</dt>
+					</dl>
+				</li>
+			</ul>
+			<div style="padding: 5px 5px 2px 5px; font-size: 1.1em; background-color: #ECF1F3; margin: 0px auto; text-align: center;">
+				{ADS_2}
+			</div>
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+	<!-- ENDIF -->
+	<a name="start_here"></a>
+	<div id="page-body">
+		<br>
+
+		<div class="navbar pagedada">
+		<span class="corners-top"><span></span></span>
+			<center>
+				<br>
+<!-- PHP -->
+/*
+					<strong>Donation Goal</strong>
+					<div style="background-color:#d4d4d4; width:400px; height:20px; padding:1px 1px 1px 1px;"> 
+<a href="http://alteriw.net/viewtopic.php?f=4&t=19191"><img src="http://www.alteriw.net/styles/alterIWnet/template/progress_image.php?s=0&e=350&c=350&p=0" border="0" /></a>
+					</div>
+					We have <em>likely</em> received a total of 985&euro; in donations towards our goal of 350&euro; Thank you all donators! We will add you to the Contributors group as soon as possible!
+				<br>
+*/
+<!-- ENDPHP -->
+<!-- PHP -->
+echo '<script type="text/javascript"><!--
+google_ad_client = "ca-pub-1305083582457756";
+/* 728x90 */
+google_ad_slot = "6449673624";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>';
+<!-- ENDPHP -->
+<br>
+			</center>
+		<span class="corners-bottom"><span></span></span>
+		</div>
+		<div class="navbar">
+			<div class="inner"><span class="corners-top"><span></span></span>
+
+			<ul class="linklist navlinks">
+				<li class="icon-home"><a href="/" accesskey="h">Portal</a> <strong>&#8250;</strong> <a href="{U_INDEX}" accesskey="h">{L_INDEX}</a> <!-- BEGIN navlinks --> <strong>&#8250;</strong> <a href="{navlinks.U_VIEW_FORUM}">{navlinks.FORUM_NAME}</a><!-- END navlinks --></li>
+
+				<!-- IF S_USER_LOGGED_IN --><li class="rightside"><font color="#e9e9e9">|</font> Welcome, <a href="{U_SEARCH_SELF}">{S_USERNAME}</a></li><!-- ENDIF -->
+				<!-- IF U_EMAIL_TOPIC --><li class="rightside"><a href="{U_EMAIL_TOPIC}" title="{L_EMAIL_TOPIC}" class="sendemail">{L_EMAIL_TOPIC}</a></li><!-- ENDIF -->
+				<!-- IF U_EMAIL_PM --><li class="rightside"><a href="{U_EMAIL_PM}" title="{L_EMAIL_PM}" class="sendemail">{L_EMAIL_PM}</a></li><!-- ENDIF -->
+				<!-- IF U_PRINT_TOPIC --><li class="rightside"><a href="{U_PRINT_TOPIC}" title="{L_PRINT_TOPIC}" accesskey="p" class="print">{L_PRINT_TOPIC}</a></li><!-- ENDIF -->
+				<!-- IF U_PRINT_PM --><li class="rightside"><a href="{U_PRINT_PM}" title="{L_PRINT_PM}" accesskey="p" class="print">{L_PRINT_PM}</a></li><!-- ENDIF -->
+	
+			</ul>
+
+			</div>
+		</div>
+	
+		<!-- IF S_BOARD_DISABLED and S_USER_LOGGED_IN and (U_MCP or U_ACP) -->
+		<div id="information" class="rules">
+			<div class="inner"><span class="corners-top"><span></span></span>
+				<strong>{L_INFORMATION}:</strong> {L_BOARD_DISABLED}
+			<span class="corners-bottom"><span></span></span></div>
+		</div>
+		<!-- ENDIF -->

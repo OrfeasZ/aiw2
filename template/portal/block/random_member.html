@@ -1,0 +1,20 @@
+<!-- $Id: random_member.html,v 1.1 2008/02/09 08:18:16 angelside Exp $ //-->
+<div class="panel">
+	<div class="inner">
+		<span class="corners-top"><span></span></span>
+			<h3>Server Stats</h3>
+			
+<!-- PHP -->
+
+				$arr=parse_ini_file("/var/www/alteriw.net/stats/stats.ini",true); 
+				$playercount = $arr['Stats']['totalPlayers'];
+				$lobbycount = $arr['Lobbies']['totalLobbies'];
+				echo "Players Online: $playercount <br>";
+				echo "Lobbies Online: $lobbycount <br>";
+				echo "<br><a href='ainstats.php'>More Stats</a><br><br>Stats are updated every 5 minutes.";
+
+<!-- ENDPHP -->
+		<span class="corners-bottom"><span></span></span>
+	</div>
+</div>
+<br style="clear:both" />

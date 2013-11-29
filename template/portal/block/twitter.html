@@ -1,0 +1,40 @@
+<div class="panel">
+        <div class="inner">
+                <span class="corners-top"><span></span></span>
+                        <h3><a href="http://twitter.com/AlterIWnet">Twitter</a></h3>
+                        <table width="100%">
+                        <tr>
+                                <td class="row1" width="33%" valign="top">
+                                        <small>
+<!-- PHP -->
+$content = file_get_contents('/var/www/alteriw.net/alteriwnet.json');
+function clickable_link($text)
+{
+$text = preg_replace('#(script|about|applet|activex|chrome):#is', "\\1:", $text);
+$ret = ' ' . $text;
+$ret = preg_replace("#(^|[\n ])([\w]+?://[\w\#$%&~/.\-;:=,?@\[\]+]*)#is", "\\1<a href=\"\\2\">\\2</a>", $ret);
+$ret = preg_replace("#(^|[\n ])((www|ftp)\.[\w\#$%&~/.\-;:=,?@\[\]+]*)#is", "\\1<a href=\"http://\\2\">\\2</a>", $ret);
+$ret = preg_replace("#(^|[\n ])([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $ret);
+$ret = preg_replace('/@(\w+)/','<a href="http://twitter.com/$1">@$1</a>',$ret);
+$ret = preg_replace('/\s+#(\w+)/',' <a href="http://search.twitter.com/search?q=%23$1">#$1</a>', $ret);
+$ret = substr($ret, 1);
+return $ret;
+}
+
+if(isset($content) && $content != "")
+{
+        $tweet = json_decode($content);
+        foreach($tweet as $twit)
+        {
+                echo "&bull; ".clickable_link($twit->text)."<br/>";
+        }
+}	
+<!-- ENDPHP -->
+                                      </small>
+                                </td>
+                              </tr>
+                        </table>
+</div>
+</div>
+
+
